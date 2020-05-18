@@ -45,3 +45,11 @@
 .product-container .content textarea{
     margin-top: 8px;
 }
+.product-container .content .table{
+    overflow: scroll;
+ 
+}
+.product-container .content table{
+    margin-top: 100px;
+
+}

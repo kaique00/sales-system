@@ -1,16 +1,14 @@
 import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import api from '../../services/api'
 import './style.css'
 
 
 export default function Product() {
-    
-    const [ name, setName ] = useState('')
-    const [ description, setDescription ] = useState('')
-    const [ value, setValue ] = useState('')
 
-
+    const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
+    const [value, setValue] = useState('')
     async function handleRegister(e) {
         e.preventDefault()
         const data = {
@@ -18,13 +16,13 @@ export default function Product() {
             value,
             description,
         }
-        console.log(data)      
-            await api.post('products', data)
-            try{
-                alert(`Cadastro efetuado com sucesso`)
-            }catch(err){
-                alert(`falha no cadastro favor tente novamente`)
-            }
+        console.log(data)
+        await api.post('products', data)
+        try {
+            alert(`Cadastro efetuado com sucesso`)
+        } catch (err) {
+            alert(`falha no cadastro favor tente novamente`)
+        }
     }
     return (
         <div className="product-container">
@@ -38,7 +36,7 @@ export default function Product() {
                 <form onSubmit={handleRegister}>
                     <input required placeholder="Nome"
                         value={name}
-                        onChange={e =>  setName(e.target.value)}
+                        onChange={e => setName(e.target.value)}
                     />
                     <textarea required placeholder="Descrição"
                         value={description}
@@ -51,9 +49,10 @@ export default function Product() {
                     <button className="button">Cadastrar</button>
                 </form>
                 
-            </div>
 
-        </div>
+            </div >
+            
+        </div >
 
     )
 } 
