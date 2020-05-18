@@ -15,7 +15,7 @@ module.exports = {
         return response.json(account);
     },
     async delete(resquest,response){
-        const { id } = request.params;
+        const { id_account } = request.body;
         
         await connection('accounts').where('id',id).delete();
     }

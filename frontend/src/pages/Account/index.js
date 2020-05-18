@@ -7,7 +7,7 @@ import './style.css'
 export default function Account() {
 
     const [products, setProducts] = useState([])
-    const [listProducts, setListProducts] = useState([])
+    const [listProducts] = useState([])
     const [total, setTotal] = useState(0)
     useEffect(function loadProduct() {
         api.get('products').then(response => {

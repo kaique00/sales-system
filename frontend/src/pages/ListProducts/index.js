@@ -1,12 +1,23 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
+import api from '../../services/api'
 //import logoImg from '../../assets/logo.jpg'
 import { FiPower, FiTrash2 } from 'react-icons/fi'
 import './style.css'
 
 
 export default function ListProducts() {
+    const [accounts, setAccounts] = useState([])
+    useEffect(function loadAccounts() {
+        api.get('accounts').then(response => {
+            setAccounts(response.data)
+        })
+    }, [])
 
+    async function deleteAccount(id){
+        await api.delete('accounts', {account_id:id})
+        this.loadAccounts()
+    }
     return (
         <div className="listproducts-container">
             <header>
@@ -21,50 +32,19 @@ export default function ListProducts() {
             </header>
             <h1>Lista de produtos</h1>
             <ul>
-                <li>
-                    <strong>Produto:</strong>
-                    <p>Camiseta Azul</p>
-                    <strong>Descrição:</strong>
-                    <p>Camiseta Azul</p>
+                {accounts.map(account => (
+                    <li>
+                    <strong key={account.id}>Venda: {account.id}</strong>
+                    <strong>Vendedor:</strong>
+                    <p>{account.user_id}</p>
                     <strong>Valor:</strong>
-                    <p>19,99</p>
-                    <button type="button">
+                    <p>{account.value}</p>
+                    <button onClick = {() => deleteAccount(account.id)}
+                    type="button">
                         <FiTrash2 size={20} />
                     </button>
                 </li>
-                <li>
-                    <strong>Produto:</strong>
-                    <p>Camiseta Azul</p>
-                    <strong>Descrição:</strong>
-                    <p>Camiseta Azul</p>
-                    <strong>Valor:</strong>
-                    <p>19,99</p>
-                    <button type="button">
-                        <FiTrash2 size={20} />
-                    </button>
-                </li>
-                <li>
-                    <strong>Produto:</strong>
-                    <p>Camiseta Azul</p>
-                    <strong>Descrição:</strong>
-                    <p>Camiseta Azul</p>
-                    <strong>Valor:</strong>
-                    <p>19,99</p>
-                    <button type="button">
-                        <FiTrash2 size={20} />
-                    </button>
-                </li>
-                <li>
-                    <strong>Produto:</strong>
-                    <p>Camiseta Azul</p>
-                    <strong>Descrição:</strong>
-                    <p>Camiseta Azul</p>
-                    <strong>Valor:</strong>
-                    <p>19,99</p>
-                    <button type="button">
-                        <FiTrash2 size={20} />
-                    </button>
-                </li>
+                ))}   
             </ul>
         </div>
 
