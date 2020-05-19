@@ -10,13 +10,13 @@ module.exports = {
         console.log(account)
         return response.json({account_id:account})
     },
-    async index(resquest, response) {
+    async index(request, response) {
         const account = await connection('accounts').select('*');
         return response.json(account);
     },
-    async delete(resquest,response){
-        const { id_account } = request.body;
-        
+    async delete(request,response){
+        const id = request.params.id;
         await connection('accounts').where('id',id).delete();
+        return response.json({message:'Deletado com sucesso'})
     }
 }

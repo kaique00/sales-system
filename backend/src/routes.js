@@ -19,7 +19,7 @@ routes.delete('/users/:id', userController.delete);
 
 routes.get('/accounts', accountController.index);
 routes.post('/accounts', accountController.create);
-routes.delete('/accounts', accountController.delete);
+routes.delete('/accounts/:id', accountController.delete);
 
 routes.get('/itensaccount', itensAccountController.index);
 routes.post('/itensaccount', itensAccountController.create);

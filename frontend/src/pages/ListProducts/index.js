@@ -13,10 +13,13 @@ export default function ListProducts() {
             setAccounts(response.data)
         })
     }, [])
-
+    async function loadVendedor(id){
+        await api.get('users', )
+    }
     async function deleteAccount(id){
-        await api.delete('accounts', {account_id:id})
-        this.loadAccounts()
+        alert("Deseja realmenet excluir esta venda ?")
+        const teste = await api.delete(`accounts/${id}`)
+        console.log(teste.data.message)
     }
     return (
         <div className="listproducts-container">
@@ -36,7 +39,7 @@ export default function ListProducts() {
                     <li>
                     <strong key={account.id}>Venda: {account.id}</strong>
                     <strong>Vendedor:</strong>
-                    <p>{account.user_id}</p>
+                    
                     <strong>Valor:</strong>
                     <p>{account.value}</p>
                     <button onClick = {() => deleteAccount(account.id)}
