@@ -18,5 +18,11 @@ module.exports = {
         const id = request.params.id;
         await connection('accounts').where('id',id).delete();
         return response.json({message:'Deletado com sucesso'})
+    },
+    async update(request,response){
+        const update = request.body
+        await connection('accounts').update('value', 250).where('id',127)
+        console.log('deuboa')
+
     }
 }

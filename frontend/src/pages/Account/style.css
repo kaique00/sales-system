@@ -86,12 +86,8 @@
     line-height: 21px;
     font-size: 16px;
 }
-table {
-    background: white;
-    border-radius: 10px;
-    padding:15px;
-    width: 500px;
-    margin: auto;
-    text-align: center;
-    box-shadow: 3px 3px 10px
+.product-container .content .table {
+    overflow: scroll;
+    height: 450px;
+   
 }

@@ -16,6 +16,10 @@ export default function Account() {
     }, [])
     function limpaCampos(){
         document.getElementById('product').value = ""
+        setTotal(0)
+        listProducts.length = 0
+        const list = (document.getElementById('listProducts'))
+        list.innerHTML = ""
     }
     async function addProduct() {
         const product = Number(document.getElementById('product').value)
@@ -23,7 +27,7 @@ export default function Account() {
         let item = document.createElement('li')
         for (var i = 0; i < products.length; i++) {
             if (products[i].id === product) {
-                item.innerHTML = `<strong> Produto: ${products[i].name}    Valor:${products[i].value} </strong>`
+                item.innerHTML = `<strong> Produto: ${products[i].name}<br>Valor:${products[i].value} </strong>`
                 listProducts.push(products[i])
                 list.appendChild(item)
                 setTotal(total + products[i].value)
@@ -52,9 +56,11 @@ export default function Account() {
             <div className="content">
                 <section>
                     <h1>Venda</h1>
+                    <div className="table">
                     <ul id="listProducts">
-
+                    
                     </ul>
+                    </div>
                     <p>Insira os produtos !</p>
                     <Link className="button" to="/listproducts">Voltar </Link>
                 </section>
