@@ -5,29 +5,30 @@ const connection = require('./database/connection')
 
 const routes = express.Router();
 const userController = require('./controllers/userController')
-const accountController = require('./controllers/accountController')
-const itensAccountController = require('./controllers/itensAccountController')
+const saleController = require('./controllers/saleController')
+const itenssaleController = require('./controllers/itenssaleController')
 const productController = require('./controllers/productController')
 const sessionController = require('./controllers/sessionController')
 
 routes.post('/session', sessionController.create)
 
-routes.post('/users', userController.create);
-routes.get('/users/listid/:id', userController.listId);
+routes.post('/user', userController.create);
+routes.get('/user/list/:id', userController.listId);
 routes.get('/users', userController.index);
-routes.delete('/users/:id', userController.delete);
+routes.delete('/user/:id', userController.delete);
 
-routes.get('/accounts', accountController.index);
-routes.post('/accounts', accountController.create);
-routes.delete('/accounts/:id', accountController.delete);
-routes.get('/account/', accountController.update);
+routes.get('/sales', saleController.index);
+routes.post('/sale/create', saleController.create);
+routes.delete('/sale/delete/:id', saleController.delete);
+routes.get('/sale/update/', saleController.update);
 
-routes.get('/itensaccount', itensAccountController.index);
-routes.post('/itensaccount', itensAccountController.create);
-routes.delete('/itensaccount/:id', itensAccountController.delete);
+routes.get('/itenssale', itenssaleController.index);
+routes.post('/itenssale/create', itenssaleController.create);
+routes.delete('/itenssale/:id', itenssaleController.delete);
+//routes.get('/itenssale/list/:id', itenssaleController.listId);
 
 routes.get('/products', productController.index);
-routes.post('/products', productController.create);
-routes.delete('/products/:id', productController.delete);
+routes.post('/product/create', productController.create);
+routes.delete('/product/delete/:id', productController.delete);
 
 module.exports = routes;

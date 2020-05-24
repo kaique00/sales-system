@@ -9,26 +9,22 @@ export default function Product() {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')
+    const [amount, setAmount] = useState('')
     async function handleRegister(e) {
         e.preventDefault()
         const data = {
             name,
             value,
             description,
+            amount,
         }
-        console.log(data)
-        await api.post('products', data)
-        try {
-            alert(`Cadastro efetuado com sucesso`)
-        } catch (err) {
-            alert(`falha no cadastro favor tente novamente`)
-        }
+        const response = await api.post('product/create', data)
+        alert(response.data.message)
     }
     return (
         <div className="product-container">
             <div className="content">
                 <section>
-
                     <h1>Cadastro de Produtos</h1>
                     <p>Preencha todos os campos para cadastrar um novo produto.</p>
                     <Link className="button" to="/listproducts">Voltar </Link>
@@ -46,10 +42,12 @@ export default function Product() {
                         value={value}
                         onChange={e => setValue(e.target.value)}
                     />
+                     <input required placeholder="Quantidade"
+                        value={amount}
+                        onChange={e => setAmount(e.target.value)}
+                    />
                     <button className="button">Cadastrar</button>
                 </form>
-                
-
             </div >
             
         </div >

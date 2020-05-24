@@ -2,26 +2,49 @@ const connection = require('../database/connection')
 
 module.exports = {
     async create(request, response) {
-        const {name, value, description} = request.body;
-        await connection('products').insert({
+        const { name, value, description, amount } = request.body;
+        await connection('product').insert({
             name,
             value,
             description,
+            amount
         })
-        console.log(name,value,description)
-        return response.json('Produto salvo com sucesso !!!')
+        try {
+            return response.json({ message: 'Produto salvo com sucesso.' })
+        } catch (err) {
+            return response.json({ message: 'Erro ao salvar produto.' })
+        }
+
     },
     async index(request, response) {
-        const {page = 1} = request.query;
-        const count = await connection('products').count();
-        console.log(count)
+        const product = await connection('product').select('*');
 
-        const products = await connection('products').select('*');
-        return response.json(products);
-    },
-    async delete(resquest,response){
-        const { id } = request.params;
+        try {
         
-        await connection('users').where('id',id).delete();
+            return response.json(product)
+            
+        } catch (err) {
+            return response.json({ message: 'Erro ao salvar produto.' })
+        }s
+    },
+    async delete(resquest, response) {
+        const { id } = request.params;
+
+        await connection('product').where('id', id).delete();
+        try {
+            return response.json({ message: 'Produto deletado com sucesso.' })
+        } catch (err) {
+            return response.json({ message: 'Erro ao deletar produto.' })
+        }
+    },
+    async update(request, response) {
+        const  { product_id, name, value, description, amount } = request.body
+        await connection('product').update('name',name, 'value', value, 'description',description,
+         'amount',amount).where('id', product_id)
+        try {
+            return response.json({ message: 'Alterado com sucesso' })
+        } catch (err) {
+            return response.json({ message: 'Erro ao alterar produto' })
+        }
     }
 }

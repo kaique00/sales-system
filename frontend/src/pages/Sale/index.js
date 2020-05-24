@@ -4,9 +4,11 @@ import api from '../../services/api'
 import './style.css'
 
 
-export default function Account() {
+export default function Sale() {
 
     const [products, setProducts] = useState([])
+    const [observation, setObservation] = useState("")
+    const [discount, setDiscount] = useState(0)
     const [listProducts] = useState([])
     const [total, setTotal] = useState(0)
     useEffect(function loadProduct() {
@@ -30,27 +32,27 @@ export default function Account() {
                 item.innerHTML = `<strong> Produto: ${products[i].name}<br>Valor:${products[i].value} </strong>`
                 listProducts.push(products[i])
                 list.appendChild(item)
-                setTotal(total + products[i].value)
-
+                setTotal(total + Number(products[i].value))
             }
         }
     }
-    async function salvaItem(accountId, productId, productValue) {
-        await api.post('itensaccount', { account_id: accountId, product_id: productId, value: 1 })
-    }
-    async function finalizar() {
-        const account_id = await api.post('accounts', { value: total, user_id: 1 })
-        listProducts.map(product => (
-            salvaItem(Number(account_id.data.account_id), product.id)
-        ))
-        alert(`Venda ${account_id.data.account_id} salva com sucesso`)
-        limpaCampos()
+    async function salvaItem(saleId, productId, productValue) {
+        console.log(saleId,productId, productValue)
+        await api.post('itenssale/create', { sale_id: saleId, product_id: productId, value: productValue })  
     }
     async function handleRegister(e) {
         e.preventDefault()
-
-
     }
+    async function finalizar(){
+        const sale = await api.post('sale/create', { value: total, user_id: 1, 
+        observation:observation, discount:Number(discount) })
+        listProducts.map(product => (
+            salvaItem(Number(sale.data.sale_id), product.id, product.value)
+        ))
+        alert(sale.data.message)
+        limpaCampos()
+    }
+    
     return (
         <div className="product-container">
             <div className="content">
@@ -61,10 +63,11 @@ export default function Account() {
                     
                     </ul>
                     </div>
+                    <h1> Total da venda {total}</h1>
                     <p>Insira os produtos !</p>
                     <Link className="button" to="/listproducts">Voltar </Link>
                 </section>
-                <form onSubmit={handleRegister}>
+                <form onSubmit={handleRegister} >
                     <label>Selecione um Produto:</label>
                     <select id="product" require="true">
                         <option>Produto</option>
@@ -73,7 +76,15 @@ export default function Account() {
                                 {product.name}</option>
                         ))}
                     </select>
-                    <h1> Total da venda {total}</h1>
+                         
+                    <textarea required placeholder="Observações da venda"
+                        value={observation}
+                        onChange={e => setObservation(e.target.value)}
+                    />       
+                        <input required placeholder="Desconto"
+                        value={discount}
+                        onChange={e => setDiscount(e.target.value)}
+                    />  
                     <button className="button" onClick={addProduct}>Adicionar</button>
                     <button className="button" onClick={finalizar}>Finalizar</button>
                 </form>

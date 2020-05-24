@@ -7,19 +7,30 @@ import './style.css'
 
 
 export default function ListProducts() {
-    const [accounts, setAccounts] = useState([])
-    useEffect(function loadAccounts() {
-        api.get('accounts').then(response => {
-            setAccounts(response.data)
+    const [sales, setSales] = useState([])
+    const [users, setUsers] = useState([])
+    const [itenssale, setItenssale] = useState([])
+    useEffect(function loadSales() {
+        api.get('sales').then(response => {
+            setSales(response.data)
         })
     }, [])
-    async function loadVendedor(id){
-        await api.get('users', )
+    async function loadUsers(id){
+        const user = api.get(`users/list/{id}`)
+        return user
     }
-    async function deleteAccount(id){
+    async function loaditensSale(id){
+        api.get(`itenssale/list/{id}`).then(response => {
+            setItenssale(response.data)
+        })
+    }
+    async function deleteSale(id){
         alert("Deseja realmenet excluir esta venda ?")
-        const teste = await api.delete(`accounts/${id}`)
-        console.log(teste.data.message)
+        const sale = await api.delete(`sale/delete/${id}`)
+        api.get('sales').then(response => {
+            setSales(response.data)
+        })
+        console.log(sale.data.message)
     }
     return (
         <div className="listproducts-container">
@@ -27,26 +38,29 @@ export default function ListProducts() {
                 <img src="" alt="" srcset="" />
                 <span>Bem vindo, Kaique</span>
                 <Link className="button" to="/products">Cadastrar novo Produto</Link>
-                <Link className="button" to="/accounts">Começar venda</Link>
+                <Link className="button" to="/sales">Começar venda</Link>
                 <Link to="/">
                     <FiPower fize={18} color="#E02041" />
                     </Link>
                 
             </header>
             <h1>Lista de produtos</h1>
+            
             <ul>
-                {accounts.map(account => (
+                {sales.map(sale => (
+                    <div className='table'>
                     <li>
-                    <strong key={account.id}>Venda: {account.id}</strong>
-                    <strong>Vendedor:</strong>
-                    
+                    <strong key={sale.id}>Venda: {sale.id}</strong>
+                    <strong>Vendedor:  </strong> 
                     <strong>Valor:</strong>
-                    <p>{account.value}</p>
-                    <button onClick = {() => deleteAccount(account.id)}
+                    <p>{sale.value}</p>
+        
+                    <button onClick = {() => deleteSale(sale.id)}
                     type="button">
                         <FiTrash2 size={20} />
                     </button>
                 </li>
+                </div>
                 ))}   
             </ul>
         </div>
