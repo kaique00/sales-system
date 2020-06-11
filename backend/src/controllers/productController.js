@@ -2,12 +2,13 @@ const connection = require('../database/connection')
 
 module.exports = {
     async create(request, response) {
-        const { name, value, description, amount } = request.body;
+        const { type, name, value, description, amount } = request.body;
         await connection('product').insert({
             name,
             value,
             description,
-            amount
+            amount,
+            type
         })
         try {
             return response.json({ message: 'Produto salvo com sucesso.' })

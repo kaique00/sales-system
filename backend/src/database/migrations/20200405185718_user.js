@@ -8,9 +8,6 @@ exports.up = function(knex) {
         table.string('cpf').notNullable();
         table.string('rg').notNullable();
         table.date('dateNasc').notNullable();
-       
-        //ForeignKey
-        
     });
 };
 

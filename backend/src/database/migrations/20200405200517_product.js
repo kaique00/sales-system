@@ -6,6 +6,7 @@ exports.up = function(knex) {
         table.string('name').notNullable();
         table.string('description').notNullable();
         table.decimal('amount').notNullable();
+        table.decimal('type').notNullable();
     });
   };
   

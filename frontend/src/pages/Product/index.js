@@ -7,6 +7,7 @@ import './style.css'
 export default function Product() {
 
     const [name, setName] = useState('')
+    const [type, setType] = useState('')
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')
     const [amount, setAmount] = useState('')
@@ -17,6 +18,7 @@ export default function Product() {
             value,
             description,
             amount,
+            type
         }
         const response = await api.post('product/create', data)
         alert(response.data.message)
@@ -45,6 +47,10 @@ export default function Product() {
                      <input required placeholder="Quantidade"
                         value={amount}
                         onChange={e => setAmount(e.target.value)}
+                    />
+                     <input required placeholder="Tipo de prouto"
+                        value={type}
+                        onChange={e => setType(e.target.value)}
                     />
                     <button className="button">Cadastrar</button>
                 </form>
